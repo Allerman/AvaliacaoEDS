@@ -52,4 +52,4 @@ DELIMITER ;
 
 
 -- Procedure criada, basta chama-lá com: 
-CALL transferir_dados_pacientes();
+-- CALL transferir_dados_pacientes();

@@ -5,23 +5,33 @@
 # segunda quais medicamentos estão no estoque. Em ambas as
 # sequencias, cada letra representa um medicamento
 
-def verificar_viabilidade(prescricao, estoque):
-	freq_prescricao = {}
-	freq_estoque = {}
-    
-	for medicamento in prescricao:
-    	freq_prescricao[medicamento] = freq_prescricao.get(medicamento, 0) + 1
-    
-	for medicamento in estoque:
-    	freq_estoque[medicamento] = freq_estoque.get(medicamento, 0) + 1
+from collections import Counter
 
-	for medicamento, frequencia_prescricao in freq_prescricao.items():
-    	if medicamento not in freq_estoque or frequencia_prescricao > freq_estoque[medicamento]:
-        	return False
+def verificar_viabilidade(prescricao, estoque, medicamento_verificar):
+    prescricao = prescricao.upper() 
+    estoque = estoque.upper()
 
-	return True
+    freq_prescricao = Counter(prescricao)
+    freq_estoque = Counter(estoque)
 
-# exemplo:
-print(verificar_viabilidade('a', 'b'))  # Saída: False
-print(verificar_viabilidade('aa', 'aab')) # Saída: True
+    if medicamento_verificar.upper() not in freq_prescricao:
+        return "Medicamento não consta na prescrição."
 
+    if medicamento_verificar.upper() not in freq_estoque or freq_prescricao[medicamento_verificar.upper()] > freq_estoque[medicamento_verificar.upper()]:
+        return "Medicamento indisponível no estoque."
+
+    return "Medicamento disponível no estoque."
+
+def main():
+    prescricao = input("Insira a prescrição de medicamentos separada por espaços: ")
+    estoque = input("Insira o estoque de medicamentos separado por espaços: ")
+    medicamento_verificar = input("Digite o medicamento que deseja verificar a viabilidade: ")
+
+    prescricao = prescricao.upper() 
+    estoque = estoque.upper()
+
+    resultado = verificar_viabilidade(prescricao, estoque, medicamento_verificar)
+    print(resultado)
+
+if __name__ == "__main__":
+    main()

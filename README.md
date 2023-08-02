@@ -5,10 +5,31 @@ Extreme Digital Solutions. Os códigos foram criados para demonstrar habilidades
 ## Problemas
 
 ### Problema 1
-Este código implementa uma função chamada `verificar_viabilidade` que verifica se uma prescrição de medicamentos é viável com base no estoque disponível. O usuário deve inserir duas sequências de caracteres separadas por espaços: a primeira sequência indica quais medicamentos foram prescritos e a segunda indica quais medicamentos estão no estoque. Cada letra representa um medicamento e a frequência de cada letra representa a dose desse medicamento. O código realiza a contagem dos medicamentos nas sequências usando a classe `Counter` do módulo `collections` e, em seguida, verifica se o medicamento desejado está presente na prescrição e se há quantidade suficiente dele no estoque. A saída do código informa se o medicamento é viável, se está indisponível no estoque ou se não consta na prescrição.
+Este código cria uma tabela chamada `PACIENTE`, no schema `stg_prontuario` para abrigar os dados dos pacientes dos hospitais:
+* stg_hospital_a
+* stg_hospital_b
+* stg_hospital_c
 
-### `prescricao-estoque/verificar_viabilidade_input.py`
-Este código é uma versão aprimorada do anterior, adicionando uma interface de input para o usuário. Ele permite que o usuário insira as sequências de medicamentos diretamente durante a execução do programa, tornando o processo de verificação mais interativo e amigável.
+Que também estao armazenados em uma tabela `PACIENTE` em seus respectivos schemas. Os seus campos sao padroes, portanto o CREATE foi feito baseando-se nas colunas e informaçoes que foram passadas para nao haver divergencias de dados.
+   ```
+id int
+nome varchar
+dt_nascimento date
+cpf int
+nome_mae varchar
+dt_atualizacao timestamp Date
+   ```
+
+
+### Problema 2
+Este código foi feito para copiar os dados dos schemas dos hospitais para a nova tabela de pacientes no schema `stg_prontuario`.
+Descidir fazer uma Procedure para automatizar esse processo.
+#### como usar
+Primeiro voce deve fazer um git clone para obter o script
+Sendo assim, se mais dados foram adicionados nos hospitais eles poderao ser copiados/transportados com apenas uma linha de codigo, sendo ela a chamada da procedure:
+   ```
+CALL transferir_dados_pacientes();
+   ```
 
 ## Como utilizar
 

@@ -4,52 +4,44 @@
 # SUS). Para tal, escreva um código em Python que leia um arquivo CSV e
 # grave seu conteúdo em uma tabela do nosso banco de dados.
 
-#inportei dados alternativos aos do SIGTAP, pois estava ocorendo erros de download dos arquivos .csv 
+#importei dados alternativos aos do SIGTAP, pois estava ocorendo erros de download dos arquivos .csv 
 
 import pandas as pd
 import mysql.connector
 
-# dados para conexão com o db
+# Dados para conexão com o db
 db_config = {
-	'host': 'localhost',
-	'database': 'stg_procedimentos',
-	'user': 'urgot',
-	'password': ' ',
+    'host': 'localhost',
+    'database': 'stg_procedimentos',
+    'user': 'urgot',
+    'password': '',
 }
 
-caminho_arquivo_csv = '/home/hermes/Downloads/procedimentosSus.csv'
-
+caminho_arquivo_csv = '/home/user/Downloads/procedimentosSus.csv'
 nome_tabela_destino = 'procedimentosSus'
 
-# leitura do arquivo CSV usando pandas
+# Leitura do arquivo CSV usando pandas
 dados_csv = pd.read_csv(caminho_arquivo_csv, encoding='utf-8', sep=',')
 
-# conexão com o db no MySQL
-conn = mysql.connector.connect(**db_config)
-cursor = conn.cursor()
+# Conexão com o db no MySQL usando contexto gerenciado (with)
+with mysql.connector.connect(**db_config) as conn:
+    with conn.cursor() as cursor:
+        try:
+            # Utilização de parâmetros para o nome da tabela no comando CREATE TABLE
+            create_table_query = "CREATE TABLE IF NOT EXISTS `{}` (codigo BIGINT, descricao VARCHAR(255))".format(nome_tabela_destino)
+            cursor.execute(create_table_query)
 
-try:
-	create_table_query = f"""
-	CREATE TABLE IF NOT EXISTS {nome_tabela_destino} (
-    	codigo BIGINT,
-    	descricao VARCHAR(255)
-	)
-	"""
-	cursor.execute(create_table_query)
+            # Utilização de Bulk Insert para melhorar o desempenho
+            insert_query = f"INSERT INTO `{nome_tabela_destino}` (codigo, descricao) VALUES (%s, %s)"
+            data_to_insert = [(row['codigo'], row['descricao']) for _, row in dados_csv.iterrows()]
+            cursor.executemany(insert_query, data_to_insert)
 
-	# gravação dos dados na tabela
-	for indice, linha in dados_csv.iterrows():
-    	query = f"INSERT INTO {nome_tabela_destino} (codigo, descricao) VALUES (%s, %s)"
-    	cursor.execute(query, (linha['codigo'], linha['descricao']))
+            # efetivar as alterações no banco de dados
+            conn.commit()
 
-	conn.commit()
+            # Log de sucesso
+            print("Dados importados com sucesso!")
 
-	print("Dados importados com sucesso!")
-
-except Exception as e :
-	print(f"Erro ao importar os dados: {str(e)}")
-finally:
-
-	cursor.close()
-	conn.close()
-
+        except Exception as e:
+            # Log de erro
+            print(f"Erro ao importar os dados: {str(e)}")

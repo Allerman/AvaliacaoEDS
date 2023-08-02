@@ -10,3 +10,15 @@ CREATE TABLE stg_prontuario.PACIENTE (
     nome_mae VARCHAR(100),
     dt_atualizacao TIMESTAMP
 );
+
+
+
+-- Alternativa melhorada, apenas para exemplo:
+CREATE TABLE stg_prontuario.PACIENTE (
+    paciente_id BIGINT PRIMARY KEY,
+    nome VARCHAR(100),
+    dt_nascimento DATE,
+    cpf VARCHAR(11) UNIQUE,
+    nome_mae VARCHAR(100),
+    dt_atualizacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

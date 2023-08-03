@@ -2,7 +2,7 @@
 Este repositório contém uma série de códigos SQL e Python desenvolvidos como parte da avaliação para a 
 Extreme Digital Solutions. Os códigos foram criados para demonstrar habilidades em programação e engenharia de dados.
 
-## Sumário
+## Sumário 📖
 - [Problemas](#problemas)
   - [Problema 1](#problema-1)
   - [Problema 2](#problema-2)

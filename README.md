@@ -41,6 +41,8 @@ dt_atualizacao timestamp Date
 ## Problema 2
 Este código foi feito para copiar os dados dos schemas dos hospitais para a nova tabela de pacientes no schema `stg_prontuario`.
 Descidir fazer uma Procedure para automatizar esse processo.
+**Procedure** é uma estrutura que agrupa comandos para realizar uma tarefa específica. Ela facilita a reutilização e organização do código, tornando o programa mais modular e eficiente, deste modo, adicionei os comandos de INSERT na tabela `PACIENTE` junto com subquerys que selecionavam os dados da tabela paciente de cada hospital.
+
 #### como usar
 Primeiro voce deve fazer um git clone ou copiar o script:
    ```

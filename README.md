@@ -1,6 +1,7 @@
 # Extreme Digital Solutions 🖥️
 Este repositório contém uma série de códigos SQL e Python desenvolvidos como parte da avaliação para a 
 Extreme Digital Solutions. Os códigos foram criados para demonstrar habilidades em programação e engenharia de dados.
+##### **Os codigos SQL foram voltados para o SGBD Mysql**.
 
 ## Sumário 📖
 - [Problemas](#problemas)
